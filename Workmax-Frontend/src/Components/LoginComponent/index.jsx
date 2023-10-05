@@ -1,78 +1,67 @@
 import "./index.scss";
-import { Card, Col, Row, FloatButton, Popover } from "antd";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button } from "antd";
+import { GooglePlusOutlined } from "@ant-design/icons";
+import { GoogleSignInAPI } from "../../App/Api/AuthApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectUserDetails,
+  setUserLoginDetails,
+} from "../../App/User/userSlice";
 
 const LoginComponent = () => {
+  const dispatch = useDispatch();
+  const userDetails = useSelector(selectUserDetails);
+
+  const navigate = useNavigate();
+  const handleAuth = () => {
+    GoogleSignInAPI().then(
+      (res) => {
+        setUser(res.user);
+        toast.success("Signed In to linkedIn with google");
+        localStorage.setItem("userEmail", res.user.email);
+        navigate("/home");
+      },
+      () => toast.error("Please check your credentials")
+    );
+  };
+
+  const setUser = (result) => {
+    dispatch(setUserLoginDetails(result));
+  };
   return (
     <div className="login-wrapper">
       <div className="login-wrapper-inner">
         <h1>Sign-in</h1>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
+        {/* <label htmlFor="email">Email</label>
+        <input
+          className="login-input"
+          name="email"
+          type="email"
+          placeholder="Email"
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          className="login-input"
+          name="password"
+          type="password"
+          placeholder="Password"
+        />
+        <Button type="primary">Primary Button</Button> */}
+        <Button
+          type="primary"
           style={{
-            maxWidth: 600,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-          initialValues={{
-            remember: true,
-          }}
-          //   onFinish={onFinish}
-          //   onFinishFailed={onFinishFailed}
-          autoComplete="off"
+          onClick={handleAuth}
         >
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+          <GooglePlusOutlined style={{ fontSize: "20px" }} />
+          Google-signin
+        </Button>
       </div>
     </div>
   );

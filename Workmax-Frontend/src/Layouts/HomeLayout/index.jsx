@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import Login from "../../Pages/Login";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
+import HomeComponent from "../../Components/HomeComponent";
 import {
   selectUserDetails,
   setUserLoginDetails,
 } from "../../App/User/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
 import Loader from "../../Components/Loader/Loader";
 
-const LoginLayout = () => {
+const HomeLayout = () => {
   const [loading, setLoading] = useState(true);
 
   const userDetails = useSelector(selectUserDetails);
@@ -21,15 +21,15 @@ const LoginLayout = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (res) => {
       dispatch(setUserLoginDetails(res));
-      if (userDetails?.user?.accessToken) {
-        navigate("/home");
+      if (!userDetails?.user?.accessToken) {
+        navigate("/");
       } else {
         setLoading(false);
       }
     });
   }, [userDetails]);
 
-  return <div>{loading ? <Loader /> : <Login />}</div>;
+  return <div>{loading ? <Loader /> : <HomeComponent />};</div>;
 };
 
-export default LoginLayout;
+export default HomeLayout;

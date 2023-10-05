@@ -1,16 +1,20 @@
 .login-wraper {
-  margin: auto;
+  // margin: auto;
 }
 
 .login-wrapper-inner {
+  margin: 100px auto;
   width: 400px;
-  gap: 20px;
+  padding: 10px;
+  gap: 10px;
   text-align: center;
-  justify-content: center;
+  color: black;
+  background-color: white;
   display: flex;
   flex-direction: column;
-  margin: 100px auto;
-  background-color: white;
+  @media (max-width: 768px) {
+    width: 70%;
+  }
 }
 
 .login-input {

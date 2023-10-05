@@ -1,3 +1,37 @@
-.home-wrapper {
-  height: 100vh;
+.home-body {
+  display: flex;
+}
+.topbar-main {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  overflow-y: hidden;
+  background-image: url("../assets/header-img.jpg");
+  background-color: transparent;
+  object-fit: contain;
+  background-repeat: no-repeat;
+
+  .name {
+    font-size: 26px;
+    padding: 4px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+  }
+}
+.ant-divider-horizontal.ant-divider-with-text-left::before,
+.ant-divider-horizontal.ant-divider-with-text-left::after {
+  border-top: 1px solid white;
+}
+.ant-divider-horizontal.ant-divider-with-text-left::before {
+  width: 10px;
+}
+.ant-layout .ant-layout-sider-children {
+  position: relative;
+}
+.ant-menu-item:last-child {
+  position: sticky;
+  bottom: 0;
 }
