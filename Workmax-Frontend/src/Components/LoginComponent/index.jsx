@@ -4,15 +4,11 @@ import { GooglePlusOutlined } from "@ant-design/icons";
 import { GoogleSignInAPI } from "../../App/Api/AuthApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectUserDetails,
-  setUserLoginDetails,
-} from "../../App/User/userSlice";
+import { useDispatch } from "react-redux";
+import { setUserLoginDetails } from "../../App/User/userSlice";
 
 const LoginComponent = () => {
   const dispatch = useDispatch();
-  const userDetails = useSelector(selectUserDetails);
 
   const navigate = useNavigate();
   const handleAuth = () => {

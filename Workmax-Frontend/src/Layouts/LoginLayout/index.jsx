@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import Login from "../../Pages/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +9,7 @@ import {
 } from "../../App/User/userSlice";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
+import LoginComponent from "../../Components/LoginComponent";
 
 const LoginLayout = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const LoginLayout = () => {
     });
   }, [userDetails]);
 
-  return <div>{loading ? <Loader /> : <Login />}</div>;
+  return <div>{loading ? <Loader /> : <LoginComponent />}</div>;
 };
 
 export default LoginLayout;

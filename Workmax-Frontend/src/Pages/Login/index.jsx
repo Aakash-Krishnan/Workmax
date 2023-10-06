@@ -1,9 +1,9 @@
-import LoginComponent from "../../Components/LoginComponent";
+import LoginLayout from "../../Layouts/LoginLayout";
 
 const Login = () => {
   return (
     <div>
-      <LoginComponent />
+      <LoginLayout />
     </div>
   );
 };
