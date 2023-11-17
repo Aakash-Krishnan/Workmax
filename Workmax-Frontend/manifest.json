@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Workmax",
+  "version": "1.0",
+  "description": "This is Workmax",
+  "permissions": ["activeTab", "tabs"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'inline-speculation-rules' https://apis.google.com/; 'wasm-unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "jsx": ["main.jsx"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    ":service_worker": "firebaseConfig.js"
+  },
+  "action": {
+    "default_popup": "index.html"
+  }
+}

@@ -1,0 +1,26 @@
+.task-card {
+  border: 1px solid grey;
+  padding: 5px 10px 5px 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.content-inner-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-content {
+  height: 3.01em;
+  overflow-y: hidden;
+}
+
+.task:active {
+  height: auto;
+}

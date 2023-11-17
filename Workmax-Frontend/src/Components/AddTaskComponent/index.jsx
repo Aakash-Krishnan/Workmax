@@ -1,15 +1,16 @@
 import { useState } from "react";
 import "./index.scss";
 import ReactQuill from "react-quill";
-import { Col, Input, Row, Slider } from "antd";
-import { Button, Card } from "antd";
+import { Col, Input, Row, Slider, Button, Card } from "antd";
+import { postTaskDetails } from "../../App/Api/FirestoreApi";
+import { useSelector } from "react-redux";
 
 const AddTasksComponent = () => {
-  const [taskInputs, setTaskInputs] = useState("Content");
-  const [title, setTitle] = useState("Enter Ttile");
-  const [datas, setDatas] = useState({});
-  const [hourSlider, setHourSlider] = useState(1);
-  const [breakTime, setBreakTime] = useState(1);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const [taskInputs, setTaskInputs] = useState("");
+  const [title, setTitle] = useState("");
+  const [hourSlider, setHourSlider] = useState(0);
+  const [breakTime, setBreakTime] = useState(0);
 
   const formatter = (hourSlider) => {
     var hours = Math.floor(hourSlider / 60);
@@ -25,7 +26,11 @@ const AddTasksComponent = () => {
     var hours = Math.floor(hourSlider / 60);
     var minutes = hourSlider % 60;
 
-    setDatas({
+    const object = {
+      taskId: crypto.randomUUID(),
+      updatedAt: new Date().toLocaleString("en-US"),
+      createdAt: new Date().toLocaleString("en-US"),
+      userId: currentUser?.userID,
       title: title,
       task: taskInputs,
       break: breakTime,
@@ -34,9 +39,10 @@ const AddTasksComponent = () => {
         minutes: minutes,
         total: hourSlider,
       },
-    });
+      tabs: "Works",
+    };
+    postTaskDetails(object);
   };
-  console.log(datas);
 
   const modules = {
     toolbar: [
@@ -67,65 +73,78 @@ const AddTasksComponent = () => {
   ];
 
   return (
-    <div className="task-wrapper">
+    <>
       <p>New Tasks</p>
-      <div>
-        <Row>
-          <Col span={24}>
-            <label htmlFor="title">Title</label>
-            <Input
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              name="title"
-              placeholder="Basic usage"
-            />
+      <div className="task-wrapper">
+        <div className="details-wrapper">
+          <Row>
+            <Col span={24}>
+              <label htmlFor="title">Title</label>
+              <Input
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+                name="title"
+                placeholder="Basic usage"
+              />
 
-            <label htmlFor="task">What to work</label>
-            <ReactQuill
-              className="modal-input"
-              theme="snow"
-              value={taskInputs}
-              onChange={setTaskInputs}
-              name="task"
-              modules={modules}
-              formats={formats}
-            />
+              <label htmlFor="task">What to work</label>
+              <ReactQuill
+                placeholder="Enter the task Details"
+                className="modal-input"
+                theme="snow"
+                value={taskInputs}
+                onChange={setTaskInputs}
+                name="task"
+                modules={modules}
+                formats={formats}
+              />
 
-            <p>Work time</p>
-            <Slider
-              onChange={hourSliderhandler}
-              value={hourSlider}
-              defaultValue={30}
-              step={15}
-              max={180}
-              tooltip={{
-                formatter,
-              }}
-            />
+              <p>Work time</p>
+              <Slider
+                onChange={hourSliderhandler}
+                value={hourSlider}
+                defaultValue={30}
+                step={15}
+                max={180}
+                tooltip={{
+                  formatter,
+                }}
+              />
 
-            <p>Short break time</p>
-            <Slider
-              onChange={setBreakTime}
-              defaultValue={30}
-              step={5}
-              max={30}
-            />
+              <p>Short break time</p>
+              <Slider
+                onChange={setBreakTime}
+                value={breakTime}
+                defaultValue={5}
+                step={5}
+                max={30}
+              />
 
-            <Button
-              onClick={handleForm}
-              className="add-task-btn"
-              type="primary"
-            >
-              Add Task
-            </Button>
-          </Col>
-        </Row>
+              <Button
+                disabled={
+                  !title.trim() ||
+                  !taskInputs.trim() ||
+                  !breakTime ||
+                  !hourSlider
+                }
+                onClick={handleForm}
+                className="add-task-btn"
+                type="primary"
+              >
+                Add Task
+              </Button>
+            </Col>
+          </Row>
+        </div>
+
+        <div className="preview-wrapper">
+          <h2>Preview</h2>
+          <Card title={title} bordered={false}>
+            <div dangerouslySetInnerHTML={{ __html: taskInputs }}></div>
+          </Card>
+        </div>
       </div>
-
-      <Card title={title} bordered={false}>
-        <div dangerouslySetInnerHTML={{ __html: taskInputs }}></div>
-      </Card>
-    </div>
+    </>
   );
 };
 

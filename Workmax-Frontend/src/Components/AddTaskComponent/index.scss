@@ -13,8 +13,10 @@
 .task-wrapper {
   gap: 30px;
   display: flex;
+  width: 100%;
   @media (max-width: 1024px) {
     flex-direction: column;
+    gap: 0px;
   }
 }
 
@@ -29,21 +31,41 @@
 
 .ql-editor {
   max-height: 250px;
-  max-width: 550px;
+  max-width: 600px;
   overflow: auto;
 }
 
-.ant-card {
-  width: 50%;
-  max-width: auto;
+.details-wrapper {
+  min-width: 50%;
+  max-width: 100%;
+}
+
+.preview-wrapper {
+  max-width: 100%;
   max-height: 500px;
-  overflow-y: scroll;
-  overflow-wrap: break-word;
-  box-shadow: 10px 5px 5px rgb(214, 22, 22);
-  @media (max-width: 1024px) {
-    width: 100%;
+  .ant-card {
+    width: 50%;
+    max-width: 40%;
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: 16px solid orange;
+    box-shadow: 10px 5px 5px rgb(178, 178, 178);
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
+  }
+
+  .ant-card::-webkit-scrollbar {
+    display: none;
   }
 }
-// .ant-card::-webkit-scrollbar {
-//   display: none;
-// }
+
+.custom-time {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

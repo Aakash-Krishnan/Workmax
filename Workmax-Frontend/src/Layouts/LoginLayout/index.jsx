@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
+import { auth } from "../../../firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectUserDetails,

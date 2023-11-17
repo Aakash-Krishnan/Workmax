@@ -35,3 +35,15 @@
   position: sticky;
   bottom: 0;
 }
+
+.ant-card {
+  box-shadow: none;
+  overflow: hidden;
+  margin-bottom: 10px;
+  width: 100%;
+  border: 1px solid red;
+}
+
+.task-card-outer {
+  gap: 10px;
+}
